@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +17,7 @@ export class UsersService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async create(createUserDto: CreateUserDto):Promise<UserEntity> {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     try {
       // Validar que el rol está en el enum
       if (!Object.values(Role).includes(createUserDto.role)) {
@@ -24,9 +28,11 @@ export class UsersService {
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error; // Lanza la excepción de rol no encontrado
-     }
-    throw new InternalServerErrorException('Error creating user', error.message);
-      
+      }
+      throw new InternalServerErrorException(
+        'Error creating user',
+        error.message,
+      );
     }
   }
 
@@ -34,7 +40,10 @@ export class UsersService {
     try {
       return await this.userRepository.find();
     } catch (error) {
-      throw new InternalServerErrorException('Error finding users', error.message);
+      throw new InternalServerErrorException(
+        'Error finding users',
+        error.message,
+      );
     }
   }
 
@@ -49,11 +58,14 @@ export class UsersService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new InternalServerErrorException('Error finding user', error.message);
+      throw new InternalServerErrorException(
+        'Error finding user',
+        error.message,
+      );
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto):Promise<UserEntity> {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     try {
       const user = await this.userRepository.preload({ id, ...updateUserDto });
       if (!user) {
@@ -61,7 +73,10 @@ export class UsersService {
       }
 
       // Validar el rol si se está actualizando
-      if (updateUserDto.role && !Object.values(Role).includes(updateUserDto.role)) {
+      if (
+        updateUserDto.role &&
+        !Object.values(Role).includes(updateUserDto.role)
+      ) {
         throw new NotFoundException('Role not found');
       }
 
@@ -70,16 +85,23 @@ export class UsersService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new InternalServerErrorException('Error updating user', error.message);
+      throw new InternalServerErrorException(
+        'Error updating user',
+        error.message,
+      );
     }
   }
 
-  async remove(id: string): Promise<void> {// void es Para métodos que no devuelven datos
+  async remove(id: string): Promise<void> {
+    // void es Para métodos que no devuelven datos
     try {
       const user = await this.findOne(id);
       await this.userRepository.remove(user);
     } catch (error) {
-      throw new InternalServerErrorException('Error removing user', error.message);
+      throw new InternalServerErrorException(
+        'Error removing user',
+        error.message,
+      );
     }
   }
 }

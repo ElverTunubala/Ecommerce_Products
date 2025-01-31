@@ -1,20 +1,22 @@
 import { Exclude } from 'class-transformer';
 import { Role } from '../../roles/roles.enum';
-import {Entity,Column,PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @Column()
+  email: string;
 
-    @Column()
-    email: string;
+  @Column()
+  username: string;
 
-    @Exclude()
-    @Column()
-    password: string;
-    
-    @Column({type: 'enum',enum: Role})
-    role: Role;
+  @Exclude()
+  @Column()
+  password: string;
+
+  @Column({ type: 'enum', enum: Role })
+  role: Role;
 }

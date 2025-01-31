@@ -4,7 +4,7 @@ import { LoginAuthDto } from './login.dto';
 import { Role } from '../../roles/roles.enum';
 
 export class RegisterAuthDto extends PartialType(LoginAuthDto) {
-    @IsNotEmpty()
-    @IsEnum(Role)
-    role: Role;
+  @IsNotEmpty()
+  @IsEnum(Role)
+  role: Role;
 }
