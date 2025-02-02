@@ -6,6 +6,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     
-    return (await super.canActivate(context)) as boolean; // Asegúrate de que retorne booleano
+    return (await super.canActivate(context)) as boolean; 
   }
 }

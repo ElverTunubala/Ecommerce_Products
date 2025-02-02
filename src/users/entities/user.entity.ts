@@ -19,4 +19,10 @@ export class UserEntity {
 
   @Column({ type: 'enum', enum: Role })
   role: Role;
+
+  @Column({ type: 'timestamptz' })
+  created_at: Date;
+
+  @Column({ type: 'timestamptz' })
+  updated_at: Date;
 }

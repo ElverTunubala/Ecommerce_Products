@@ -19,7 +19,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     try {
-      // Validar que el rol está en el enum
+      
       if (!Object.values(Role).includes(createUserDto.role)) {
         throw new NotFoundException('Role not found');
       }
